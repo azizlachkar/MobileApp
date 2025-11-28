@@ -1,5 +1,6 @@
 package com.example.eventapplication.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,9 @@ import com.example.eventapplication.R;
 import com.example.eventapplication.auth.SessionManager;
 import com.example.eventapplication.data.User;
 import com.example.eventapplication.data.UserDao;
+import com.google.firebase.auth.FirebaseAuth;
+import com.example.eventapplication.ui.NewReclamationActivity;
+import com.example.eventapplication.ui.MyReclamationsActivity;
 
 public class ProfileFragment extends Fragment {
 
@@ -52,10 +56,35 @@ public class ProfileFragment extends Fragment {
         etRole = view.findViewById(R.id.etRole);
         imgAvatar = view.findViewById(R.id.imgAvatar);
         btnSave = view.findViewById(R.id.btnSave);
+        Button btnSignOut = view.findViewById(R.id.btnSignOut);
+        Button btnNewReclamation = view.findViewById(R.id.btnNewReclamation);
+        Button btnMyReclamations = view.findViewById(R.id.btnMyReclamations);
 
         loadUserData();
 
         btnSave.setOnClickListener(v -> saveChanges());
+
+        btnSignOut.setOnClickListener(v -> {
+            // Clear local session
+            session.logout();
+            // Sign out from Firebase
+            FirebaseAuth.getInstance().signOut();
+
+            // Navigate back to sign-in screen and clear back stack
+            Intent i = new Intent(requireContext(), SignInActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        });
+
+        btnNewReclamation.setOnClickListener(v -> {
+            Intent i = new Intent(requireContext(), NewReclamationActivity.class);
+            startActivity(i);
+        });
+
+        btnMyReclamations.setOnClickListener(v -> {
+            Intent i = new Intent(requireContext(), MyReclamationsActivity.class);
+            startActivity(i);
+        });
     }
 
     private void loadUserData() {
@@ -75,6 +104,7 @@ public class ProfileFragment extends Fragment {
 
         if (currentUser.age != null)
             etAge.setText(String.valueOf(currentUser.age));
+
     }
 
     private void saveChanges() {
@@ -98,4 +128,5 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(getContext(), "Failed to update profile", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

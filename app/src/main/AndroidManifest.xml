@@ -19,6 +19,11 @@
             android:name=".ui.LocationPickerActivity"
             android:exported="false" />
         <activity android:name="com.example.eventapplication.ui.HomeActivity" android:exported="false" />
+        <activity android:name="com.example.eventapplication.ui.AdminDashboardActivity" android:exported="false" />
+        <activity android:name="com.example.eventapplication.ui.NewReclamationActivity" android:exported="false" />
+        <activity android:name="com.example.eventapplication.ui.ReclamationAdminActivity" android:exported="false" />
+        <activity android:name="com.example.eventapplication.ui.MyReclamationsActivity" android:exported="false" />
+
         <activity android:name="com.example.eventapplication.ui.VerifyEmailActivity" />
         <activity android:name="com.example.eventapplication.ui.AddEditEventActivity" />
         <activity android:name="com.example.eventapplication.ui.EventDetailActivity" />
